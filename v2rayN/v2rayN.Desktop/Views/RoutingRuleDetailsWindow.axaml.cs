@@ -23,19 +23,11 @@ public partial class RoutingRuleDetailsWindow : WindowBase<RoutingRuleDetailsVie
         clbInboundTag.SelectionChanged += ClbInboundTag_SelectionChanged;
 
         ViewModel = new RoutingRuleDetailsViewModel(rulesItem, UpdateViewHandler);
-        cmbOutboundTag.ItemsSource = new List<string> { Global.ProxyTag, Global.DirectTag, Global.BlockTag };
-        Global.RuleProtocols.ForEach(it =>
-        {
-            clbProtocol.Items.Add(it);
-        });
-        Global.InboundTags.ForEach(it =>
-        {
-            clbInboundTag.Items.Add(it);
-        });
-        Global.RuleNetworks.ForEach(it =>
-        {
-            cmbNetwork.Items.Add(it);
-        });
+
+        cmbOutboundTag.ItemsSource = Global.OutboundTags;
+        clbProtocol.ItemsSource = Global.RuleProtocols;
+        clbInboundTag.ItemsSource = Global.InboundTags;
+        cmbNetwork.ItemsSource = Global.RuleNetworks;
 
         if (!rulesItem.Id.IsNullOrEmpty())
         {
