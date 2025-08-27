@@ -825,9 +825,6 @@
   <data name="menuRoutingAdvancedSetDefault" xml:space="preserve">
     <value>Установить как активное правило</value>
   </data>
-  <data name="TbdomainMatcher" xml:space="preserve">
-    <value>Сопоставитель доменов</value>
-  </data>
   <data name="TbdomainStrategy" xml:space="preserve">
     <value>Доменная стратегия</value>
   </data>
@@ -1061,6 +1058,18 @@
   </data>
   <data name="LvPrevProfileTip" xml:space="preserve">
     <value>Убедитесь, что примечание существует и является уникальным</value>
+  </data>
+  <data name="TbSettingsTunAutoRoute" xml:space="preserve">
+    <value>Автоматическая маршрутизация</value>
+  </data>
+  <data name="TbSettingsTunStrictRoute" xml:space="preserve">
+    <value>Строгая маршрутизация</value>
+  </data>
+  <data name="TbSettingsTunStack" xml:space="preserve">
+    <value>Сетевой стек</value>
+  </data>
+  <data name="TbSettingsTunMtu" xml:space="preserve">
+    <value>MTU</value>
   </data>
   <data name="TbSettingsEnableExInbound" xml:space="preserve">
     <value>Включить дополнительный входящий канал</value>

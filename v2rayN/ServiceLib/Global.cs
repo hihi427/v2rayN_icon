@@ -48,6 +48,7 @@ public class Global
     public const string ProxyTag = "proxy";
     public const string DirectTag = "direct";
     public const string BlockTag = "block";
+    public const string DnsTag = "dns-module";
     public const string StreamSecurity = "tls";
     public const string StreamSecurityReality = "reality";
     public const string Loopback = "127.0.0.1";
@@ -56,6 +57,9 @@ public class Global
     public const string HttpsProtocol = "https://";
     public const string SocksProtocol = "socks://";
     public const string Socks5Protocol = "socks5://";
+    public const string AsIs = "AsIs";
+    public const string IPIfNonMatch = "IPIfNonMatch";
+    public const string IPOnDemand = "IPOnDemand";
 
     public const string UserEMail = "t@t.tt";
     public const string AutoRunRegPath = @"Software\Microsoft\Windows\CurrentVersion\Run";
@@ -285,11 +289,36 @@ public class Global
             "sing_box"
     ];
 
+    public static readonly HashSet<EConfigType> XraySupportConfigType =
+    [
+        EConfigType.VMess,
+            EConfigType.VLESS,
+            EConfigType.Shadowsocks,
+            EConfigType.Trojan,
+            EConfigType.WireGuard,
+            EConfigType.SOCKS,
+            EConfigType.HTTP,
+    ];
+
+    public static readonly HashSet<EConfigType> SingboxSupportConfigType =
+    [
+        EConfigType.VMess,
+            EConfigType.VLESS,
+            EConfigType.Shadowsocks,
+            EConfigType.Trojan,
+            EConfigType.Hysteria2,
+            EConfigType.TUIC,
+            EConfigType.Anytls,
+            EConfigType.WireGuard,
+            EConfigType.SOCKS,
+            EConfigType.HTTP,
+    ];
+
     public static readonly List<string> DomainStrategies =
     [
-        "AsIs",
-            "IPIfNonMatch",
-            "IPOnDemand"
+        AsIs,
+        IPIfNonMatch,
+        IPOnDemand
     ];
 
     public static readonly List<string> DomainStrategies4Singbox =
@@ -298,13 +327,6 @@ public class Global
             "ipv6_only",
             "prefer_ipv4",
             "prefer_ipv6",
-            ""
-    ];
-
-    public static readonly List<string> DomainMatchers =
-    [
-        "linear",
-            "mph",
             ""
     ];
 
@@ -460,9 +482,11 @@ public class Global
     public static readonly List<int> TunMtus =
     [
         1280,
-            1408,
-            1500,
-            9000
+        1408,
+        1500,
+        4064,
+        9000,
+        65535
     ];
 
     public static readonly List<string> TunStacks =
@@ -536,6 +560,7 @@ public class Global
             { ECoreType.brook, "txthinking/brook" },
             { ECoreType.overtls, "ShadowsocksR-Live/overtls" },
             { ECoreType.shadowquic, "spongebob888/shadowquic" },
+            { ECoreType.mieru, "enfein/mieru" },
             { ECoreType.v2rayN, "2dust/v2rayN" },
         };
 
