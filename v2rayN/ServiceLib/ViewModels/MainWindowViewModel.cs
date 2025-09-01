@@ -1,4 +1,5 @@
 using System.Reactive;
+using System.Reactive.Concurrency;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Splat;
@@ -245,7 +246,7 @@ public class MainWindowViewModel : MyReactiveObject
 
     #region Actions
 
-    private void UpdateHandler(bool notify, string msg)
+    private async Task UpdateHandler(bool notify, string msg)
     {
         NoticeManager.Instance.SendMessage(msg);
         if (notify)
@@ -254,43 +255,31 @@ public class MainWindowViewModel : MyReactiveObject
         }
     }
 
-    private void UpdateTaskHandler(bool success, string msg)
+    private async Task UpdateTaskHandler(bool success, string msg)
     {
         NoticeManager.Instance.SendMessageEx(msg);
         if (success)
         {
             var indexIdOld = _config.IndexId;
-            RefreshServers();
+            await RefreshServers();
             if (indexIdOld != _config.IndexId)
             {
-                _ = Reload();
+                await Reload();
             }
             if (_config.UiItem.EnableAutoAdjustMainLvColWidth)
             {
-                _updateView?.Invoke(EViewAction.AdjustMainLvColWidth, null);
+                AppEvents.AdjustMainLvColWidthRequested.OnNext(Unit.Default);
             }
         }
     }
 
-    private void UpdateStatisticsHandler(ServerSpeedItem update)
+    private async Task UpdateStatisticsHandler(ServerSpeedItem update)
     {
         if (!_config.UiItem.ShowInTaskbar)
         {
             return;
         }
-        _updateView?.Invoke(EViewAction.DispatcherStatistics, update);
-    }
-
-    public void SetStatisticsResult(ServerSpeedItem update)
-    {
-        if (_config.GuiItem.DisplayRealTimeSpeed)
-        {
-            Locator.Current.GetService<StatusBarViewModel>()?.UpdateStatistics(update);
-        }
-        if (_config.GuiItem.EnableStatistics && (update.ProxyUp + update.ProxyDown) > 0 && DateTime.Now.Second % 9 == 0)
-        {
-            Locator.Current.GetService<ProfilesViewModel>()?.UpdateStatistics(update);
-        }
+        AppEvents.DispatcherStatisticsRequested.OnNext(update);
     }
 
     public async Task MyAppExitAsync(bool blWindowsShutDown)
@@ -300,7 +289,7 @@ public class MainWindowViewModel : MyReactiveObject
             Logging.SaveLog("MyAppExitAsync Begin");
 
             await SysProxyHandler.UpdateSysProxy(_config, true);
-            MessageBus.Current.SendMessage("", EMsgCommand.AppExit.ToString());
+            AppEvents.AppExitRequested.OnNext(Unit.Default);
 
             await ConfigHandler.SaveConfig(_config);
             await ProfileExManager.Instance.SaveTo();
@@ -350,9 +339,11 @@ public class MainWindowViewModel : MyReactiveObject
 
     #region Servers && Groups
 
-    private void RefreshServers()
+    private async Task RefreshServers()
     {
-        MessageBus.Current.SendMessage("", EMsgCommand.RefreshProfiles.ToString());
+        AppEvents.ProfilesRefreshRequested.OnNext(Unit.Default);
+
+        await Task.Delay(200);
     }
 
     private void RefreshSubscriptions()
@@ -384,7 +375,7 @@ public class MainWindowViewModel : MyReactiveObject
         }
         if (ret == true)
         {
-            RefreshServers();
+            await RefreshServers();
             if (item.IndexId == _config.IndexId)
             {
                 await Reload();
@@ -399,11 +390,11 @@ public class MainWindowViewModel : MyReactiveObject
             await _updateView?.Invoke(EViewAction.AddServerViaClipboard, null);
             return;
         }
-        int ret = await ConfigHandler.AddBatchServers(_config, clipboardData, _config.SubIndexId, false);
+        var ret = await ConfigHandler.AddBatchServers(_config, clipboardData, _config.SubIndexId, false);
         if (ret > 0)
         {
             RefreshSubscriptions();
-            RefreshServers();
+            await RefreshServers();
             NoticeManager.Instance.Enqueue(string.Format(ResUI.SuccessfullyImportedServerViaClipboard, ret));
         }
         else
@@ -449,11 +440,11 @@ public class MainWindowViewModel : MyReactiveObject
         }
         else
         {
-            int ret = await ConfigHandler.AddBatchServers(_config, result, _config.SubIndexId, false);
+            var ret = await ConfigHandler.AddBatchServers(_config, result, _config.SubIndexId, false);
             if (ret > 0)
             {
                 RefreshSubscriptions();
-                RefreshServers();
+                await RefreshServers();
                 NoticeManager.Instance.Enqueue(ResUI.SuccessfullyImportedServerViaScan);
             }
             else
@@ -532,7 +523,7 @@ public class MainWindowViewModel : MyReactiveObject
     private async Task ClearServerStatistics()
     {
         await StatisticsManager.Instance.ClearAllServerStatistics();
-        RefreshServers();
+        await RefreshServers();
     }
 
     private async Task OpenTheFileLocation()
@@ -576,7 +567,7 @@ public class MainWindowViewModel : MyReactiveObject
         });
         Locator.Current.GetService<StatusBarViewModel>()?.TestServerAvailability();
 
-        _updateView?.Invoke(EViewAction.DispatcherReload, null);
+        RxApp.MainThreadScheduler.Schedule(() => _ = ReloadResult());
 
         BlReloadEnabled = true;
         if (_hasNextReloadJob)
@@ -586,7 +577,7 @@ public class MainWindowViewModel : MyReactiveObject
         }
     }
 
-    public void ReloadResult()
+    public async Task ReloadResult()
     {
         // BlReloadEnabled = true;
         //Locator.Current.GetService<StatusBarViewModel>()?.ChangeSystemProxyAsync(_config.systemProxyItem.sysProxyType, false);
@@ -596,7 +587,9 @@ public class MainWindowViewModel : MyReactiveObject
             Locator.Current.GetService<ClashProxiesViewModel>()?.ProxiesReload();
         }
         else
-        { TabMainSelectedIndex = 0; }
+        {
+            TabMainSelectedIndex = 0;
+        }
     }
 
     private async Task LoadCore()
@@ -631,7 +624,7 @@ public class MainWindowViewModel : MyReactiveObject
         Locator.Current.GetService<StatusBarViewModel>()?.RefreshRoutingsMenu();
 
         await ConfigHandler.SaveConfig(_config);
-        await new UpdateService().UpdateGeoFileAll(_config, UpdateHandler);
+        await new UpdateService().UpdateGeoFileAll(_config, UpdateTaskHandler);
         await Reload();
     }
 
