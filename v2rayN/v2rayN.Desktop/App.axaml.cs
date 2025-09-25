@@ -1,8 +1,7 @@
+using System.Reactive;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using Splat;
-using v2rayN.Desktop.Common;
 using v2rayN.Desktop.Views;
 
 namespace v2rayN.Desktop;
@@ -16,9 +15,7 @@ public partial class App : Application
         AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
         TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
 
-        var ViewModel = new StatusBarViewModel(null);
-        Locator.CurrentMutable.RegisterLazySingleton(() => ViewModel, typeof(StatusBarViewModel));
-        DataContext = ViewModel;
+        DataContext = StatusBarViewModel.Instance;
     }
 
     public override void OnFrameworkInitializationCompleted()
@@ -57,16 +54,8 @@ public partial class App : Application
         {
             if (desktop.MainWindow != null)
             {
-                var clipboardData = await AvaUtils.GetClipboardData(desktop.MainWindow);
-                if (clipboardData.IsNullOrEmpty())
-                {
-                    return;
-                }
-                var service = Locator.Current.GetService<MainWindowViewModel>();
-                if (service != null)
-                {
-                    _ = service.AddServerViaClipboardAsync(clipboardData);
-                }
+                AppEvents.AddServerViaClipboardRequested.OnNext(Unit.Default);
+                await Task.Delay(1000);
             }
         }
     }

@@ -6,10 +6,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
-using System.Windows.Threading;
 using MaterialDesignThemes.Wpf;
 using ReactiveUI;
-using Splat;
 using v2rayN.Manager;
 
 namespace v2rayN.Views;
@@ -37,7 +35,6 @@ public partial class MainWindow
         menuBackupAndRestore.Click += MenuBackupAndRestore_Click;
 
         ViewModel = new MainWindowViewModel(UpdateViewHandler);
-        Locator.CurrentMutable.RegisterLazySingleton(() => ViewModel, typeof(MainWindowViewModel));
 
         switch (_config.UiItem.MainGirdOrientation)
         {
@@ -146,10 +143,16 @@ public partial class MainWindow
               .DisposeWith(disposables);
 
             AppEvents.ShutdownRequested
-            .AsObservable()
-            .ObserveOn(RxApp.MainThreadScheduler)
-            .Subscribe(content => Shutdown(content))
-            .DisposeWith(disposables);
+             .AsObservable()
+             .ObserveOn(RxApp.MainThreadScheduler)
+             .Subscribe(content => Shutdown(content))
+             .DisposeWith(disposables);
+
+            AppEvents.ShowHideWindowRequested
+             .AsObservable()
+             .ObserveOn(RxApp.MainThreadScheduler)
+             .Subscribe(blShow => ShowHideWindow(blShow))
+             .DisposeWith(disposables);
         });
 
         this.Title = $"{Utils.GetVersion()} - {(Utils.IsAdministrator() ? ResUI.RunAsAdmin : ResUI.NotRunAsAdmin)}";
@@ -210,13 +213,6 @@ public partial class MainWindow
             case EViewAction.SubSettingWindow:
                 return (new SubSettingWindow().ShowDialog() ?? false);
 
-            case EViewAction.ShowHideWindow:
-                Application.Current?.Dispatcher.Invoke((() =>
-                {
-                    ShowHideWindow((bool?)obj);
-                }), DispatcherPriority.Normal);
-                break;
-
             case EViewAction.ScanScreenTask:
                 await ScanScreenTaskAsync();
                 break;
@@ -226,11 +222,7 @@ public partial class MainWindow
                 break;
 
             case EViewAction.AddServerViaClipboard:
-                var clipboardData = WindowsUtils.GetClipboardData();
-                if (clipboardData.IsNotEmpty())
-                {
-                    ViewModel?.AddServerViaClipboardAsync(clipboardData);
-                }
+                await AddServerViaClipboardAsync();
                 break;
         }
 
@@ -249,7 +241,7 @@ public partial class MainWindow
             case EGlobalHotkey.SystemProxySet:
             case EGlobalHotkey.SystemProxyUnchanged:
             case EGlobalHotkey.SystemProxyPac:
-                Locator.Current.GetService<StatusBarViewModel>()?.SetListenerType((ESysProxyType)((int)e - 1));
+                AppEvents.SysProxyChangeRequested.OnNext((ESysProxyType)((int)e - 1));
                 break;
         }
     }
@@ -283,16 +275,7 @@ public partial class MainWindow
                     {
                         return;
                     }
-
-                    var clipboardData = WindowsUtils.GetClipboardData();
-                    if (clipboardData.IsNotEmpty())
-                    {
-                        var service = Locator.Current.GetService<MainWindowViewModel>();
-                        if (service != null)
-                        {
-                            _ = service.AddServerViaClipboardAsync(clipboardData);
-                        }
-                    }
+                    AddServerViaClipboardAsync().ContinueWith(_ => { });
 
                     break;
 
@@ -324,6 +307,15 @@ public partial class MainWindow
     private void menuSettingsSetUWP_Click(object sender, RoutedEventArgs e)
     {
         ProcUtils.ProcessStart(Utils.GetBinPath("EnableLoopback.exe"));
+    }
+
+    public async Task AddServerViaClipboardAsync()
+    {
+        var clipboardData = WindowsUtils.GetClipboardData();
+        if (clipboardData.IsNotEmpty() && ViewModel != null)
+        {
+            await ViewModel.AddServerViaClipboardAsync(clipboardData);
+        }
     }
 
     private async Task ScanScreenTaskAsync()
