@@ -1374,22 +1374,22 @@
   <data name="TbPorts7Tips" xml:space="preserve">
     <value>会覆盖端口，多组时用逗号 (,) 隔开</value>
   </data>
-  <data name="menuSetDefaultMultipleServer" xml:space="preserve">
-    <value>多配置文件产生自定义配置 (多选)</value>
+  <data name="menuGenGroupMultipleServer" xml:space="preserve">
+    <value>多配置文件生成策略组</value>
   </data>
-  <data name="menuSetDefaultMultipleServerXrayRandom" xml:space="preserve">
+  <data name="menuGenGroupMultipleServerXrayRandom" xml:space="preserve">
     <value>多配置文件随机 Xray</value>
   </data>
-  <data name="menuSetDefaultMultipleServerXrayRoundRobin" xml:space="preserve">
+  <data name="menuGenGroupMultipleServerXrayRoundRobin" xml:space="preserve">
     <value>多配置文件负载均衡 Xray</value>
   </data>
-  <data name="menuSetDefaultMultipleServerXrayLeastPing" xml:space="preserve">
+  <data name="menuGenGroupMultipleServerXrayLeastPing" xml:space="preserve">
     <value>多配置文件最低延迟 Xray</value>
   </data>
-  <data name="menuSetDefaultMultipleServerXrayLeastLoad" xml:space="preserve">
+  <data name="menuGenGroupMultipleServerXrayLeastLoad" xml:space="preserve">
     <value>多配置文件最稳定 Xray</value>
   </data>
-  <data name="menuSetDefaultMultipleServerSingBoxLeastPing" xml:space="preserve">
+  <data name="menuGenGroupMultipleServerSingBoxLeastPing" xml:space="preserve">
     <value>多配置文件最低延迟 sing-box</value>
   </data>
   <data name="menuExportConfig" xml:space="preserve">
@@ -1422,11 +1422,11 @@
   <data name="TbSBOutboundDomainResolve" xml:space="preserve">
     <value>解析出站域名</value>
   </data>
-  <data name="TbSBDoHResolverServer" xml:space="preserve">
-    <value>sing-box DoH 解析服务器</value>
+  <data name="TbSBBootstrapDNS" xml:space="preserve">
+    <value>Bootstrap DNS (sing-box)</value>
   </data>
   <data name="TbSBFallbackDNSResolve" xml:space="preserve">
-    <value>兜底解析其他 DNS 域名，建议设为 ip</value>
+    <value>解析 DNS 服务器域名，需指定为 IP</value>
   </data>
   <data name="TbXrayFreedomResolveStrategy" xml:space="preserve">
     <value>xray freedom 解析策略</value>
@@ -1439,9 +1439,6 @@
   </data>
   <data name="TbAddCommonDNSHosts" xml:space="preserve">
     <value>添加常用 DNS Hosts</value>
-  </data>
-  <data name="TbSBDoHOverride" xml:space="preserve">
-    <value>开启后可覆盖 sing-box DoH 解析服务器</value>
   </data>
   <data name="TbFakeIP" xml:space="preserve">
     <value>FakeIP</value>
@@ -1511,5 +1508,89 @@
   </data>
   <data name="TbFakeIPTips" xml:space="preserve">
     <value>默认全局生效，内置 FakeIP 过滤，仅在 sing-box 中生效</value>
+  </data>
+  <data name="PleaseAddAtLeastOneServer" xml:space="preserve">
+    <value>请至少添加一个配置文件</value>
+  </data>
+  <data name="TbConfigTypePolicyGroup" xml:space="preserve">
+    <value>策略组</value>
+  </data>
+  <data name="TbConfigTypeProxyChain" xml:space="preserve">
+    <value>链式代理</value>
+  </data>
+  <data name="TbLeastPing" xml:space="preserve">
+    <value>最低延迟</value>
+  </data>
+  <data name="TbRandom" xml:space="preserve">
+    <value>随机</value>
+  </data>
+  <data name="TbRoundRobin" xml:space="preserve">
+    <value>负载均衡</value>
+  </data>
+  <data name="TbLeastLoad" xml:space="preserve">
+    <value>最稳定</value>
+  </data>
+  <data name="TbPolicyGroupType" xml:space="preserve">
+    <value>策略组类型</value>
+  </data>
+  <data name="menuAddPolicyGroupServer" xml:space="preserve">
+    <value>添加策略组配置文件</value>
+  </data>
+  <data name="menuAddProxyChainServer" xml:space="preserve">
+    <value>添加链式代理配置文件</value>
+  </data>
+  <data name="menuAddChildServer" xml:space="preserve">
+    <value>添加子配置文件</value>
+  </data>
+  <data name="menuRemoveChildServer" xml:space="preserve">
+    <value>删除子配置文件</value>
+  </data>
+  <data name="menuServerList" xml:space="preserve">
+    <value>服务器列表</value>
+  </data>
+  <data name="TbFallback" xml:space="preserve">
+    <value>故障转移</value>
+  </data>
+  <data name="menuGenGroupMultipleServerSingBoxFallback" xml:space="preserve">
+    <value>多配置文件故障转移 sing-box</value>
+  </data>
+  <data name="menuGenGroupMultipleServerXrayFallback" xml:space="preserve">
+    <value>多配置文件故障转移 Xray</value>
+  </data>
+  <data name="CoreNotSupportNetwork" xml:space="preserve">
+    <value>核心 '{0}' 不支持网络类型 '{1}'。</value>
+  </data>
+  <data name="CoreNotSupportProtocolTransport" xml:space="preserve">
+    <value>核心 '{0}' 在使用传输方式 '{2}' 时不支持协议 '{1}'。</value>
+  </data>
+  <data name="CoreNotSupportProtocol" xml:space="preserve">
+    <value>核心 '{0}' 不支持协议 '{1}'。</value>
+  </data>
+  <data name="ProxyChainedPrefix" xml:space="preserve">
+    <value>代理链： </value>
+  </data>
+  <data name="RoutingRuleOutboundPrefix" xml:space="preserve">
+    <value>路由规则出站： </value>
+  </data>
+  <data name="PolicyGroupPrefix" xml:space="preserve">
+    <value>策略组： </value>
+  </data>
+  <data name="NodeTagNotExist" xml:space="preserve">
+    <value>节点别名 '{0}' 不存在。</value>
+  </data>
+  <data name="GroupEmpty" xml:space="preserve">
+    <value>组“{0}”为空。请至少添加一个节点。</value>
+  </data>
+  <data name="InvalidProperty" xml:space="preserve">
+    <value>{0}属性无效，请检查</value>
+  </data>
+  <data name="GroupSelfReference" xml:space="preserve">
+    <value>{0} 分组不能引用自身或循环引用</value>
+  </data>
+  <data name="NotSupportProtocol" xml:space="preserve">
+    <value>不支持协议 '{0}'。</value>
+  </data>
+  <data name="TbSettingsHide2TrayWhenCloseTip" xml:space="preserve">
+    <value>如果系统没有托盘功能，请不要开启</value>
   </data>
 </root>

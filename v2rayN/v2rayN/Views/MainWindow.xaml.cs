@@ -25,6 +25,12 @@ public partial class MainWindow
         _config = AppManager.Instance.Config;
         ThreadPool.RegisterWaitForSingleObject(App.ProgramStarted, OnProgramStarted, null, -1, false);
 
+        if (_config.UiItem.AutoHideStartup)
+        {
+            this.ShowActivated = false;
+            this.WindowState = WindowState.Minimized;
+        }
+
         App.Current.SessionEnding += Current_SessionEnding;
         this.Closing += MainWindow_Closing;
         this.PreviewKeyDown += MainWindow_PreviewKeyDown;
@@ -79,6 +85,8 @@ public partial class MainWindow
             this.BindCommand(ViewModel, vm => vm.AddWireguardServerCmd, v => v.menuAddWireguardServer).DisposeWith(disposables);
             this.BindCommand(ViewModel, vm => vm.AddAnytlsServerCmd, v => v.menuAddAnytlsServer).DisposeWith(disposables);
             this.BindCommand(ViewModel, vm => vm.AddCustomServerCmd, v => v.menuAddCustomServer).DisposeWith(disposables);
+            this.BindCommand(ViewModel, vm => vm.AddPolicyGroupServerCmd, v => v.menuAddPolicyGroupServer).DisposeWith(disposables);
+            this.BindCommand(ViewModel, vm => vm.AddProxyChainServerCmd, v => v.menuAddProxyChainServer).DisposeWith(disposables);
             this.BindCommand(ViewModel, vm => vm.AddServerViaClipboardCmd, v => v.menuAddServerViaClipboard).DisposeWith(disposables);
             this.BindCommand(ViewModel, vm => vm.AddServerViaScanCmd, v => v.menuAddServerViaScan).DisposeWith(disposables);
             this.BindCommand(ViewModel, vm => vm.AddServerViaImageCmd, v => v.menuAddServerViaImage).DisposeWith(disposables);
@@ -194,6 +202,11 @@ public partial class MainWindow
                 if (obj is null)
                     return false;
                 return (new AddServer2Window((ProfileItem)obj)).ShowDialog() ?? false;
+
+            case EViewAction.AddGroupServerWindow:
+                if (obj is null)
+                    return false;
+                return (new AddGroupServerWindow((ProfileItem)obj)).ShowDialog() ?? false;
 
             case EViewAction.DNSSettingWindow:
                 return (new DNSSettingWindow().ShowDialog() ?? false);
@@ -383,6 +396,10 @@ public partial class MainWindow
     protected override void OnLoaded(object? sender, RoutedEventArgs e)
     {
         base.OnLoaded(sender, e);
+        if (_config.UiItem.AutoHideStartup)
+        {
+            ShowHideWindow(false);
+        }
         RestoreUI();
     }
 

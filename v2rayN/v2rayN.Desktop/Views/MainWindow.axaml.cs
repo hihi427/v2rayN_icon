@@ -31,6 +31,12 @@ public partial class MainWindow : WindowBase<MainWindowViewModel>
         _config = AppManager.Instance.Config;
         _manager = new WindowNotificationManager(TopLevel.GetTopLevel(this)) { MaxItems = 3, Position = NotificationPosition.TopRight };
 
+        if (_config.UiItem.AutoHideStartup)
+        {
+            this.ShowActivated = false;
+            this.WindowState = WindowState.Minimized;
+        }
+
         this.KeyDown += MainWindow_KeyDown;
         menuSettingsSetUWP.Click += menuSettingsSetUWP_Click;
         menuPromotion.Click += menuPromotion_Click;
@@ -83,6 +89,8 @@ public partial class MainWindow : WindowBase<MainWindowViewModel>
             this.BindCommand(ViewModel, vm => vm.AddWireguardServerCmd, v => v.menuAddWireguardServer).DisposeWith(disposables);
             this.BindCommand(ViewModel, vm => vm.AddAnytlsServerCmd, v => v.menuAddAnytlsServer).DisposeWith(disposables);
             this.BindCommand(ViewModel, vm => vm.AddCustomServerCmd, v => v.menuAddCustomServer).DisposeWith(disposables);
+            this.BindCommand(ViewModel, vm => vm.AddPolicyGroupServerCmd, v => v.menuAddPolicyGroupServer).DisposeWith(disposables);
+            this.BindCommand(ViewModel, vm => vm.AddProxyChainServerCmd, v => v.menuAddProxyChainServer).DisposeWith(disposables);
             this.BindCommand(ViewModel, vm => vm.AddServerViaClipboardCmd, v => v.menuAddServerViaClipboard).DisposeWith(disposables);
             this.BindCommand(ViewModel, vm => vm.AddServerViaScanCmd, v => v.menuAddServerViaScan).DisposeWith(disposables);
             this.BindCommand(ViewModel, vm => vm.AddServerViaImageCmd, v => v.menuAddServerViaImage).DisposeWith(disposables);
@@ -206,6 +214,11 @@ public partial class MainWindow : WindowBase<MainWindowViewModel>
                 if (obj is null)
                     return false;
                 return await new AddServer2Window((ProfileItem)obj).ShowDialog<bool>(this);
+
+            case EViewAction.AddGroupServerWindow:
+                if (obj is null)
+                    return false;
+                return await new AddGroupServerWindow((ProfileItem)obj).ShowDialog<bool>(this);
 
             case EViewAction.DNSSettingWindow:
                 return await new DNSSettingWindow().ShowDialog<bool>(this);
@@ -399,7 +412,10 @@ public partial class MainWindow : WindowBase<MainWindowViewModel>
 
     public void ShowHideWindow(bool? blShow)
     {
-        var bl = blShow ?? (!_config.UiItem.ShowInTaskbar ^ (WindowState == WindowState.Minimized));
+        var bl = blShow ??
+                    Utils.IsLinux()
+                    ? (!_config.UiItem.ShowInTaskbar ^ (WindowState == WindowState.Minimized))
+                    : !_config.UiItem.ShowInTaskbar;
         if (bl)
         {
             this.Show();
@@ -431,6 +447,10 @@ public partial class MainWindow : WindowBase<MainWindowViewModel>
     protected override void OnLoaded(object? sender, RoutedEventArgs e)
     {
         base.OnLoaded(sender, e);
+        if (_config.UiItem.AutoHideStartup)
+        {
+            ShowHideWindow(false);
+        }
         RestoreUI();
     }
 
