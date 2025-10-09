@@ -510,7 +510,7 @@ public class ProfilesViewModel : MyReactiveObject
         {
             ret = await _updateView?.Invoke(EViewAction.AddServer2Window, item);
         }
-        else if (eConfigType is EConfigType.PolicyGroup or EConfigType.ProxyChain)
+        else if (eConfigType.IsGroupType())
         {
             ret = await _updateView?.Invoke(EViewAction.AddGroupServerWindow, item);
         }
@@ -603,16 +603,6 @@ public class ProfilesViewModel : MyReactiveObject
         {
             NoticeManager.Instance.Enqueue(ResUI.PleaseSelectServer);
             return;
-        }
-
-        var msgs = await ActionPrecheckManager.Instance.CheckBeforeSetActive(indexId);
-        foreach (var msg in msgs)
-        {
-            NoticeManager.Instance.SendMessage(msg);
-        }
-        if (msgs.Count > 0)
-        {
-            NoticeManager.Instance.Enqueue(msgs.First());
         }
 
         if (await ConfigHandler.SetDefaultServerIndex(_config, indexId) == 0)
@@ -779,15 +769,17 @@ public class ProfilesViewModel : MyReactiveObject
             return;
         }
 
-        var msgs = await ActionPrecheckManager.Instance.CheckBeforeGenerateConfig(item);
-        foreach (var msg in msgs)
-        {
-            NoticeManager.Instance.SendMessage(msg);
-        }
+        var msgs = await ActionPrecheckManager.Instance.Check(item);
         if (msgs.Count > 0)
         {
-            NoticeManager.Instance.Enqueue(msgs.First());
+            foreach (var msg in msgs)
+            {
+                NoticeManager.Instance.SendMessage(msg);
+            }
+            NoticeManager.Instance.Enqueue(Utils.List2String(msgs.Take(10).ToList(), true));
+            return;
         }
+
         if (blClipboard)
         {
             var result = await CoreConfigHandler.GenerateClientConfig(item, null);

@@ -350,7 +350,7 @@ public class MainWindowViewModel : MyReactiveObject
         {
             ret = await _updateView?.Invoke(EViewAction.AddServer2Window, item);
         }
-        else if (eConfigType is EConfigType.PolicyGroup or EConfigType.ProxyChain)
+        else if (eConfigType.IsGroupType())
         {
             ret = await _updateView?.Invoke(EViewAction.AddGroupServerWindow, item);
         }
@@ -537,6 +537,18 @@ public class MainWindowViewModel : MyReactiveObject
         }
 
         BlReloadEnabled = false;
+
+        var msgs = await ActionPrecheckManager.Instance.Check(_config.IndexId);
+        if (msgs.Count > 0)
+        {
+            foreach (var msg in msgs)
+            {
+                NoticeManager.Instance.SendMessage(msg);
+            }
+            NoticeManager.Instance.Enqueue(Utils.List2String(msgs.Take(10).ToList(), true));
+            BlReloadEnabled = true;
+            return;
+        }
 
         await Task.Run(async () =>
         {
