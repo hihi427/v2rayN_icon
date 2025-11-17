@@ -300,7 +300,7 @@ public partial class CoreConfigSingboxService
 
     private bool ParseV2Domain(string domain, Rule4Sbox rule)
     {
-        if (domain.StartsWith("#") || domain.StartsWith("ext:") || domain.StartsWith("ext-domain:"))
+        if (domain.StartsWith('#') || domain.StartsWith("ext:") || domain.StartsWith("ext-domain:"))
         {
             return false;
         }
@@ -316,10 +316,8 @@ public partial class CoreConfigSingboxService
         }
         else if (domain.StartsWith("domain:"))
         {
-            rule.domain ??= [];
             rule.domain_suffix ??= [];
-            rule.domain?.Add(domain.Substring(7));
-            rule.domain_suffix?.Add("." + domain.Substring(7));
+            rule.domain_suffix?.Add(domain.Substring(7));
         }
         else if (domain.StartsWith("full:"))
         {

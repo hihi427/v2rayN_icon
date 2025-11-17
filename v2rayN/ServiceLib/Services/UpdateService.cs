@@ -17,17 +17,17 @@ public class UpdateService(Config config, Func<bool, string, Task> updateFunc)
         {
             if (args.Success)
             {
-                UpdateFunc(false, ResUI.MsgDownloadV2rayCoreSuccessfully);
-                UpdateFunc(true, Utils.UrlEncode(fileName));
+                _ = UpdateFunc(false, ResUI.MsgDownloadV2rayCoreSuccessfully);
+                _ = UpdateFunc(true, Utils.UrlEncode(fileName));
             }
             else
             {
-                UpdateFunc(false, args.Msg);
+                _ = UpdateFunc(false, args.Msg);
             }
         };
         downloadHandle.Error += (sender2, args) =>
         {
-            UpdateFunc(false, args.GetException().Message);
+            _ = UpdateFunc(false, args.GetException().Message);
         };
 
         await UpdateFunc(false, string.Format(ResUI.MsgStartUpdating, ECoreType.v2rayN));
@@ -57,26 +57,26 @@ public class UpdateService(Config config, Func<bool, string, Task> updateFunc)
         {
             if (args.Success)
             {
-                UpdateFunc(false, ResUI.MsgDownloadV2rayCoreSuccessfully);
-                UpdateFunc(false, ResUI.MsgUnpacking);
+                _ = UpdateFunc(false, ResUI.MsgDownloadV2rayCoreSuccessfully);
+                _ = UpdateFunc(false, ResUI.MsgUnpacking);
 
                 try
                 {
-                    UpdateFunc(true, fileName);
+                    _ = UpdateFunc(true, fileName);
                 }
                 catch (Exception ex)
                 {
-                    UpdateFunc(false, ex.Message);
+                    _ = UpdateFunc(false, ex.Message);
                 }
             }
             else
             {
-                UpdateFunc(false, args.Msg);
+                _ = UpdateFunc(false, args.Msg);
             }
         };
         downloadHandle.Error += (sender2, args) =>
         {
-            UpdateFunc(false, args.GetException().Message);
+            _ = UpdateFunc(false, args.GetException().Message);
         };
 
         await UpdateFunc(false, string.Format(ResUI.MsgStartUpdating, type));
@@ -396,6 +396,7 @@ public class UpdateService(Config config, Func<bool, string, Task> updateFunc)
         }
 
         //append dns items TODO
+        geoSiteFiles.Add("google");
         geoSiteFiles.Add("cn");
         geoSiteFiles.Add("geolocation-cn");
         geoSiteFiles.Add("category-ads-all");
@@ -438,7 +439,7 @@ public class UpdateService(Config config, Func<bool, string, Task> updateFunc)
         {
             if (args.Success)
             {
-                UpdateFunc(false, string.Format(ResUI.MsgDownloadGeoFileSuccessfully, fileName));
+                _ = UpdateFunc(false, string.Format(ResUI.MsgDownloadGeoFileSuccessfully, fileName));
 
                 try
                 {
@@ -452,17 +453,17 @@ public class UpdateService(Config config, Func<bool, string, Task> updateFunc)
                 }
                 catch (Exception ex)
                 {
-                    UpdateFunc(false, ex.Message);
+                    _ = UpdateFunc(false, ex.Message);
                 }
             }
             else
             {
-                UpdateFunc(false, args.Msg);
+                _ = UpdateFunc(false, args.Msg);
             }
         };
         downloadHandle.Error += (sender2, args) =>
         {
-            UpdateFunc(false, args.GetException().Message);
+            _ = UpdateFunc(false, args.GetException().Message);
         };
 
         await downloadHandle.DownloadFileAsync(url, tmpFileName, true, _timeout);
