@@ -220,12 +220,6 @@ public class DnsServer4Ray
     public List<string>? domains { get; set; }
     public bool? skipFallback { get; set; }
     public List<string>? expectedIPs { get; set; }
-    public List<string>? unexpectedIPs { get; set; }
-    public string? clientIp { get; set; }
-    public string? queryStrategy { get; set; }
-    public int? timeoutMs { get; set; }
-    public bool? disableCache { get; set; }
-    public bool? finalQuery { get; set; }
     public string? tag { get; set; }
 }
 
@@ -341,7 +335,7 @@ public class StreamSettings4Ray
 
     public HysteriaSettings4Ray? hysteriaSettings { get; set; }
 
-    public FinalMask4Ray? finalmask { get; set; }
+    public Finalmask4Ray? finalmask { get; set; }
 
     public Sockopt4Ray? sockopt { get; set; }
 }
@@ -472,11 +466,11 @@ public class HysteriaSettings4Ray
 
 public class HysteriaUdpHop4Ray
 {
-    public string? ports { get; set; }
+    public string? port { get; set; }
     public string? interval { get; set; }
 }
 
-public class FinalMask4Ray
+public class Finalmask4Ray
 {
     public List<Mask4Ray>? tcp { get; set; }
     public List<Mask4Ray>? udp { get; set; }
@@ -485,7 +479,7 @@ public class FinalMask4Ray
 public class Mask4Ray
 {
     public string type { get; set; }
-    public MaskSettings4Ray? settings { get; set; }
+    public object? settings { get; set; }
 }
 
 public class MaskSettings4Ray

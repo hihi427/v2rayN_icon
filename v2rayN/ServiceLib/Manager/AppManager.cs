@@ -230,6 +230,42 @@ public sealed class AppManager
         return await SQLiteHelper.Instance.TableAsync<ProfileItem>().FirstOrDefaultAsync(it => it.IndexId == indexId);
     }
 
+    public async Task<List<ProfileItem>> GetProfileItemsByIndexIds(IEnumerable<string> indexIds)
+    {
+        var ids = indexIds.Where(id => !id.IsNullOrEmpty()).Distinct().ToList();
+        if (ids.Count == 0)
+        {
+            return [];
+        }
+        return await SQLiteHelper.Instance.TableAsync<ProfileItem>()
+            .Where(it => ids.Contains(it.IndexId))
+            .ToListAsync();
+    }
+
+    public async Task<Dictionary<string, ProfileItem>> GetProfileItemsByIndexIdsAsMap(IEnumerable<string> indexIds)
+    {
+        var items = await GetProfileItemsByIndexIds(indexIds);
+        return items.ToDictionary(it => it.IndexId);
+    }
+
+    public async Task<List<ProfileItem>> GetProfileItemsOrderedByIndexIds(IEnumerable<string> indexIds)
+    {
+        var idList = indexIds.Where(id => !id.IsNullOrEmpty()).Distinct().ToList();
+        if (idList.Count == 0)
+        {
+            return [];
+        }
+
+        var items = await SQLiteHelper.Instance.TableAsync<ProfileItem>()
+            .Where(it => idList.Contains(it.IndexId))
+            .ToListAsync();
+        var itemMap = items.ToDictionary(it => it.IndexId);
+
+        return idList.Select(id => itemMap.GetValueOrDefault(id))
+            .Where(item => item != null)
+            .ToList();
+    }
+
     public async Task<ProfileItem?> GetProfileItemViaRemarks(string? remarks)
     {
         if (remarks.IsNullOrEmpty())
