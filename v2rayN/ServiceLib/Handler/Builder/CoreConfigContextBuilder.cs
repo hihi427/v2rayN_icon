@@ -309,6 +309,11 @@ public class CoreConfigContextBuilder
         }
 
         var nodeValidatorResult = NodeValidator.Validate(node, context.RunCoreType);
+        var msgs = new List<string>([.. nodeValidatorResult.Errors, .. nodeValidatorResult.Warnings]);
+        if (msgs.Count > 0)
+        {
+            Logging.SaveLog($"{node.Remarks}: {string.Join("; ", msgs)}");
+        }
         if (!nodeValidatorResult.Success)
         {
             return nodeValidatorResult;
