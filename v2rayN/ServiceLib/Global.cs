@@ -511,6 +511,7 @@ public class Global
     [
         "http",
         "tls",
+        "quic",
         "bittorrent"
     ];
 
@@ -528,7 +529,6 @@ public class Global
         "tls",
         "quic",
         "fakedns",
-        "fakedns+others"
     ];
 
     public static readonly List<int> TunMtus =
@@ -638,6 +638,24 @@ public class Global
         @"https://api-ipv6.ip.sb/geoip",
         @"https://api.ipapi.is",
         @""
+    ];
+
+    public static readonly List<string> UdpTestTargets =
+    [
+        "ntp:pool.ntp.org",
+        "ntp:time.google.com",
+        "dns:1.1.1.1",
+        "dns:8.8.8.8",
+        "dns:dns.google",
+        "stun:stun.voztovoice.org",
+        "stun:stun.cloudflare.com",
+        "stun:stun.l.google.com:19302",
+        "mcbe:pms.mc-complex.com",
+        "mcbe:bedrock.opblocks.com",
+        "mcbe:opsucht.net",
+        "mcbe:play.craftersmc.net",
+        "mcbe:mps.lemoncloud.net",
+        "mcbe:bedrock.talonmc.net",
     ];
 
     public static readonly List<string> OutboundTags =

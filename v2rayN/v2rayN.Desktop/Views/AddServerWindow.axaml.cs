@@ -218,6 +218,7 @@ public partial class AddServerWindow : WindowBase<AddServerViewModel>
 
             this.Bind(ViewModel, vm => vm.KcpHeaderType, v => v.cmbHeaderTypeKcp.SelectedValue).DisposeWith(disposables);
             this.Bind(ViewModel, vm => vm.KcpSeed, v => v.txtKcpSeed.Text).DisposeWith(disposables);
+            this.Bind(ViewModel, vm => vm.KcpMtu, v => v.txtKcpMtu.Text).DisposeWith(disposables);
 
             this.Bind(ViewModel, vm => vm.Host, v => v.txtRequestHostWs.Text).DisposeWith(disposables);
             this.Bind(ViewModel, vm => vm.Path, v => v.txtPathWs.Text).DisposeWith(disposables);
@@ -337,21 +338,27 @@ public partial class AddServerWindow : WindowBase<AddServerViewModel>
             case nameof(ETransport.raw):
                 gridTransportRaw.IsVisible = true;
                 break;
+
             case nameof(ETransport.kcp):
                 gridTransportKcp.IsVisible = true;
                 break;
+
             case nameof(ETransport.ws):
                 gridTransportWs.IsVisible = true;
                 break;
+
             case nameof(ETransport.httpupgrade):
                 gridTransportHttpupgrade.IsVisible = true;
                 break;
+
             case nameof(ETransport.xhttp):
                 gridTransportXhttp.IsVisible = true;
                 break;
+
             case nameof(ETransport.grpc):
                 gridTransportGrpc.IsVisible = true;
                 break;
+
             default:
                 gridTransportRaw.IsVisible = true;
                 break;

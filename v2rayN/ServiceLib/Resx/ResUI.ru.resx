@@ -720,9 +720,6 @@
   <data name="TbSettingsPass" xml:space="preserve">
     <value>Пароль авторизации</value>
   </data>
-  <data name="TbSettingsRemoteDNS" xml:space="preserve">
-    <value>Пользовательский DNS (если несколько, то делите запятыми (,))</value>
-  </data>
   <data name="TbSettingsSetUWP" xml:space="preserve">
     <value>Разрешить loopback для приложений UWP (Win10)</value>
   </data>
@@ -1712,5 +1709,11 @@
   </data>
   <data name="TbAllowInsecureCertFetchTips" xml:space="preserve">
     <value>Only for fetching self-signed certificates. This may expose you to MITM risks.</value>
+  </data>
+  <data name="menuUdpTestServer" xml:space="preserve">
+    <value>Test Configurations UDP Delay</value>
+  </data>
+  <data name="TbSettingsUdpTestUrl" xml:space="preserve">
+    <value>UDP Test Url</value>
   </data>
 </root>

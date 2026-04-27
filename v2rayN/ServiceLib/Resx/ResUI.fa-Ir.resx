@@ -720,9 +720,6 @@
   <data name="TbSettingsPass" xml:space="preserve">
     <value>مجوز احراز هویت</value>
   </data>
-  <data name="TbSettingsRemoteDNS" xml:space="preserve">
-    <value>سفارشی DNS (multiple, separated by commas (,))</value>
-  </data>
   <data name="TbSettingsSetUWP" xml:space="preserve">
     <value>تنظیم کردن Win10 UWP Loopback</value>
   </data>
@@ -1712,5 +1709,11 @@ The "Get Certificate" action may fail if a self-signed certificate is used or if
   </data>
   <data name="TbAllowInsecureCertFetchTips" xml:space="preserve">
     <value>Only for fetching self-signed certificates. This may expose you to MITM risks.</value>
+  </data>
+  <data name="menuUdpTestServer" xml:space="preserve">
+    <value>Test Configurations UDP Delay</value>
+  </data>
+  <data name="TbSettingsUdpTestUrl" xml:space="preserve">
+    <value>UDP Test Url</value>
   </data>
 </root>
