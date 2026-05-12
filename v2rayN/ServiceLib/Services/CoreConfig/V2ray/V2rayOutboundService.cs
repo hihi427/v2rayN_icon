@@ -258,13 +258,14 @@ public partial class CoreConfigV2rayService
                         var peer = new WireguardPeer4Ray
                         {
                             publicKey = protocolExtra.WgPublicKey ?? "",
-                            endpoint = address + ":" + _node.Port.ToString()
+                            endpoint = address + ":" + _node.Port.ToString(),
+                            preSharedKey = protocolExtra.WgPresharedKey,
                         };
                         var setting = new Outboundsettings4Ray
                         {
-                            address = Utils.String2List(protocolExtra.WgInterfaceAddress),
+                            address = Utils.String2List(protocolExtra.WgInterfaceAddress)?.Select(s => s.Trim()).ToList() ?? ["172.16.0.2/32"],
                             secretKey = _node.Password,
-                            reserved = Utils.String2List(protocolExtra.WgReserved)?.Select(int.Parse).ToList(),
+                            reserved = Utils.String2List(protocolExtra.WgReserved)?.Select(s => s.Trim()).Select(int.Parse).ToList(),
                             mtu = protocolExtra.WgMtu > 0 ? protocolExtra.WgMtu : Global.TunMtus.First(),
                             peers = [peer]
                         };
@@ -383,7 +384,6 @@ public partial class CoreConfigV2rayService
                     alpn = _node.GetAlpn(),
                     fingerprint = _node.Fingerprint.IsNullOrEmpty() ? _config.CoreBasicItem.DefFingerprint : _node.Fingerprint,
                     echConfigList = _node.EchConfigList.NullIfEmpty(),
-                    echForceQuery = _node.EchForceQuery.NullIfEmpty()
                 };
                 if (sni.IsNotEmpty())
                 {
@@ -392,6 +392,11 @@ public partial class CoreConfigV2rayService
                 else if (host.IsNotEmpty())
                 {
                     tlsSettings.serverName = Utils.String2List(host)?.First();
+                }
+                if (!tlsSettings.echConfigList.IsNullOrEmpty())
+                {
+                    // For legacy xray compatibility, remove this in the future
+                    tlsSettings.echForceQuery = "full";
                 }
                 var certs = CertPemManager.ParsePemChain(_node.Cert);
                 if (certs.Count > 0)
@@ -572,7 +577,7 @@ public partial class CoreConfigV2rayService
                         : _config.HysteriaItem.UpMbps;
                     int? downMbps = protocolExtra?.DownMbps is { } sd and >= 0
                         ? sd
-                        : _config.HysteriaItem.UpMbps;
+                        : _config.HysteriaItem.DownMbps;
                     var hopInterval = !protocolExtra.HopInterval.IsNullOrEmpty()
                         ? protocolExtra.HopInterval
                         : (_config.HysteriaItem.HopInterval >= 5

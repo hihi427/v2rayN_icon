@@ -106,7 +106,7 @@ namespace ServiceLib.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Please check the Configuration settings first. 的本地化字符串。
+        ///   查找类似 Invalid configuration, please check or reselect 的本地化字符串。
         /// </summary>
         public static string CheckServerSettings {
             get {
@@ -1020,6 +1020,15 @@ namespace ServiceLib.Resx {
         public static string menuExport2ClientConfigClipboard {
             get {
                 return ResourceManager.GetString("menuExport2ClientConfigClipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Export v2rayN Internal Share Link to Clipboard 的本地化字符串。
+        /// </summary>
+        public static string menuExport2InnerUri {
+            get {
+                return ResourceManager.GetString("menuExport2InnerUri", resourceCulture);
             }
         }
         
@@ -2944,15 +2953,6 @@ namespace ServiceLib.Resx {
         }
         
         /// <summary>
-        ///   查找类似 EchForceQuery 的本地化字符串。
-        /// </summary>
-        public static string TbEchForceQuery {
-            get {
-                return ResourceManager.GetString("TbEchForceQuery", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Edit 的本地化字符串。
         /// </summary>
         public static string TbEdit {
@@ -3232,6 +3232,15 @@ namespace ServiceLib.Resx {
         }
         
         /// <summary>
+        ///   查找类似 MTU 的本地化字符串。
+        /// </summary>
+        public static string TbMtu {
+            get {
+                return ResourceManager.GetString("TbMtu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Transport protocol(network) 的本地化字符串。
         /// </summary>
         public static string TbNetwork {
@@ -3318,6 +3327,15 @@ namespace ServiceLib.Resx {
         public static string TbPorts7Tips {
             get {
                 return ResourceManager.GetString("TbPorts7Tips", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 PreSharedKey 的本地化字符串。
+        /// </summary>
+        public static string TbPreSharedKey {
+            get {
+                return ResourceManager.GetString("TbPreSharedKey", resourceCulture);
             }
         }
         
@@ -3439,7 +3457,7 @@ namespace ServiceLib.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Reserved (2,3,4) 的本地化字符串。
+        ///   查找类似 Reserved 的本地化字符串。
         /// </summary>
         public static string TbReserved {
             get {
@@ -3687,6 +3705,24 @@ namespace ServiceLib.Resx {
         public static string TbSettingsAutoUpdateInterval {
             get {
                 return ResourceManager.GetString("TbSettingsAutoUpdateInterval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Bind Interface 的本地化字符串。
+        /// </summary>
+        public static string TbSettingsBindInterface {
+            get {
+                return ResourceManager.GetString("TbSettingsBindInterface", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 For multi-interface environments, enter the name of the interface to bind. Only effective on Windows systems or TUN mode 的本地化字符串。
+        /// </summary>
+        public static string TbSettingsBindInterfaceTip {
+            get {
+                return ResourceManager.GetString("TbSettingsBindInterfaceTip", resourceCulture);
             }
         }
         
@@ -4353,15 +4389,6 @@ namespace ServiceLib.Resx {
         public static string TbSettingsTunMode {
             get {
                 return ResourceManager.GetString("TbSettingsTunMode", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 MTU 的本地化字符串。
-        /// </summary>
-        public static string TbSettingsTunMtu {
-            get {
-                return ResourceManager.GetString("TbSettingsTunMtu", resourceCulture);
             }
         }
         
