@@ -1377,6 +1377,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="300" />
@@ -1437,13 +1438,12 @@
                         VerticalAlignment="Center"
                         Style="{StaticResource ToolbarTextBlock}"
                         Text="{x:Static resx:ResUI.TbAllowInsecure}" />
-                    <ComboBox
-                        x:Name="cmbAllowInsecure"
+                    <ToggleButton
+                        x:Name="togAllowInsecure"
                         Grid.Row="4"
                         Grid.Column="1"
-                        Width="200"
                         Margin="{StaticResource Margin4}"
-                        Style="{StaticResource DefComboBox}" />
+                        HorizontalAlignment="Left" />
 
                     <TextBlock
                         Grid.Row="5"
@@ -1455,6 +1455,22 @@
                     <TextBox
                         x:Name="txtEchConfigList"
                         Grid.Row="5"
+                        Grid.Column="1"
+                        Width="400"
+                        Margin="{StaticResource Margin4}"
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource DefTextBox}" />
+
+                    <TextBlock
+                        Grid.Row="6"
+                        Grid.Column="0"
+                        Margin="{StaticResource Margin4}"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource ToolbarTextBlock}"
+                        Text="{x:Static resx:ResUI.TbVerifyPeerCertByName}" />
+                    <TextBox
+                        x:Name="txtVerifyPeerCertByName"
+                        Grid.Row="6"
                         Grid.Column="1"
                         Width="400"
                         Margin="{StaticResource Margin4}"
