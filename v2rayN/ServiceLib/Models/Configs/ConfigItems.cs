@@ -249,6 +249,7 @@ public class Fragment4RayItem
     public string? Packets { get; set; }
     public string? Length { get; set; }
     public string? Interval { get; set; }
+    public string? MaxSplit { get; set; }
 }
 
 [Serializable]
@@ -276,4 +277,11 @@ public class SimpleDNSItem
     public bool? ParallelQuery { get; set; }
     public string? Hosts { get; set; }
     public string? DirectExpectedIPs { get; set; }
+}
+
+[Serializable]
+public class NetBridgeItem
+{
+    public string? RuleProcess { get; set; }
+    public bool EnableDnsViaProxy { get; set; }
 }

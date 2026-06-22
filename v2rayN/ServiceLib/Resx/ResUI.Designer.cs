@@ -223,20 +223,20 @@ namespace ServiceLib.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Please fill in the correct IPv4 address for SendThrough. 的本地化字符串。
-        /// </summary>
-        public static string FillCorrectSendThroughIPv4 {
-            get {
-                return ResourceManager.GetString("FillCorrectSendThroughIPv4", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Please enter the correct port format. 的本地化字符串。
         /// </summary>
         public static string FillCorrectServerPort {
             get {
                 return ResourceManager.GetString("FillCorrectServerPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Fragment parameter format error. Please check Length (e.g. 50-100), Interval (1-100 range), and MaxSplit (0-10000). 的本地化字符串。
+        /// </summary>
+        public static string FillFragmentParameterError {
+            get {
+                return ResourceManager.GetString("FillFragmentParameterError", resourceCulture);
             }
         }
         
@@ -1321,6 +1321,15 @@ namespace ServiceLib.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Process traffic hijacking (experimental) 的本地化字符串。
+        /// </summary>
+        public static string menuNetBridge {
+            get {
+                return ResourceManager.GetString("menuNetBridge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 New Update 的本地化字符串。
         /// </summary>
         public static string menuNewUpdate {
@@ -2068,6 +2077,15 @@ namespace ServiceLib.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Insecure configuration detected: AllowInsecure is enabled but no certificate is provided. This may cause MITM attacks. 的本地化字符串。
+        /// </summary>
+        public static string MsgInsecureConfiguration {
+            get {
+                return ResourceManager.GetString("MsgInsecureConfiguration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 The {0} property is invalid, please check 的本地化字符串。
         /// </summary>
         public static string MsgInvalidProperty {
@@ -2298,6 +2316,15 @@ namespace ServiceLib.Resx {
         public static string NeedRebootTips {
             get {
                 return ResourceManager.GetString("NeedRebootTips", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 The process names that need to be proxied; separate multiple processes with commas. Processes not in the list will also be hijacked, but will connect directly. 的本地化字符串。
+        /// </summary>
+        public static string NetBridgeRuleTips {
+            get {
+                return ResourceManager.GetString("NetBridgeRuleTips", resourceCulture);
             }
         }
         
@@ -2671,24 +2698,6 @@ namespace ServiceLib.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Allow insecure cert fetch (self-signed) 的本地化字符串。
-        /// </summary>
-        public static string TbAllowInsecureCertFetch {
-            get {
-                return ResourceManager.GetString("TbAllowInsecureCertFetch", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Only for fetching self-signed certificates. This may expose you to MITM risks. 的本地化字符串。
-        /// </summary>
-        public static string TbAllowInsecureCertFetchTips {
-            get {
-                return ResourceManager.GetString("TbAllowInsecureCertFetchTips", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 ALPN 的本地化字符串。
         /// </summary>
         public static string TbAlpn {
@@ -3048,6 +3057,24 @@ namespace ServiceLib.Resx {
         public static string TbEnableFinalFragmentTip {
             get {
                 return ResourceManager.GetString("TbEnableFinalFragmentTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Enables process traffic hijacking (experimental), similar to Proxifer; can coexist with system proxy; conflicts with TUN mode, please do not enable them simultaneously;please allow v2rayN to use a private network in your firewall. 的本地化字符串。
+        /// </summary>
+        public static string TbEnableNetBridge {
+            get {
+                return ResourceManager.GetString("TbEnableNetBridge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 DNS via Bridge 的本地化字符串。
+        /// </summary>
+        public static string TbEnabletDnsViaProxy {
+            get {
+                return ResourceManager.GetString("TbEnabletDnsViaProxy", resourceCulture);
             }
         }
         
@@ -3691,6 +3718,15 @@ namespace ServiceLib.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Save rules 的本地化字符串。
+        /// </summary>
+        public static string TbSaveNetBridgeRule {
+            get {
+                return ResourceManager.GetString("TbSaveNetBridgeRule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 sing-box Full Config Template 的本地化字符串。
         /// </summary>
         public static string TbSBFullConfigTemplate {
@@ -4056,6 +4092,114 @@ namespace ServiceLib.Resx {
         public static string TbSettingsEnableFragment {
             get {
                 return ResourceManager.GetString("TbSettingsEnableFragment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Fragment Length 的本地化字符串。
+        /// </summary>
+        public static string TbSettingsFragmentLength {
+            get {
+                return ResourceManager.GetString("TbSettingsFragmentLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Fragment size range in bytes (e.g., 50-100). First value must be &lt;= second. Empty = default. 的本地化字符串。
+        /// </summary>
+        public static string TbSettingsFragmentLengthTip {
+            get {
+                return ResourceManager.GetString("TbSettingsFragmentLengthTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Fragment Interval 的本地化字符串。
+        /// </summary>
+        public static string TbSettingsFragmentInterval {
+            get {
+                return ResourceManager.GetString("TbSettingsFragmentInterval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Delay between fragments in ms (e.g., 10-20). Range 1-100. First value must be &lt;= second. Empty = default. 的本地化字符串。
+        /// </summary>
+        public static string TbSettingsFragmentIntervalTip {
+            get {
+                return ResourceManager.GetString("TbSettingsFragmentIntervalTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Max Split 的本地化字符串。
+        /// </summary>
+        public static string TbSettingsFragmentMaxSplit {
+            get {
+                return ResourceManager.GetString("TbSettingsFragmentMaxSplit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Maximum number of splits (0 = unlimited, 0-10000). Only effective for Xray-core. Empty = default. 的本地化字符串。
+        /// </summary>
+        public static string TbSettingsFragmentMaxSplitTip {
+            get {
+                return ResourceManager.GetString("TbSettingsFragmentMaxSplitTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Fragment Packets 的本地化字符串。
+        /// </summary>
+        public static string TbSettingsFragmentPackets {
+            get {
+                return ResourceManager.GetString("TbSettingsFragmentPackets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Packets to fragment: tlshello (TLS ClientHello) or 1-1 to 1-5 (first N TCP packets) 的本地化字符串。
+        /// </summary>
+        public static string TbSettingsFragmentPacketsTip {
+            get {
+                return ResourceManager.GetString("TbSettingsFragmentPacketsTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Sing-box Fragment Strategy 的本地化字符串。
+        /// </summary>
+        public static string TbSettingsFragmentSingboxStrategy {
+            get {
+                return ResourceManager.GetString("TbSettingsFragmentSingboxStrategy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 TLS Fragment: standard TLS record splitting. TCP Bypass: fragment TCP packets. Double: both modes combined. sing-box only. 的本地化字符串。
+        /// </summary>
+        public static string TbSettingsFragmentSingboxStrategyTip {
+            get {
+                return ResourceManager.GetString("TbSettingsFragmentSingboxStrategyTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Fallback Delay 的本地化字符串。
+        /// </summary>
+        public static string TbSettingsFragmentFallbackDelay {
+            get {
+                return ResourceManager.GetString("TbSettingsFragmentFallbackDelay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Fallback delay for TLS fragment. Only effective for sing-box. Empty = default. 的本地化字符串。
+        /// </summary>
+        public static string TbSettingsFragmentFallbackDelayTip {
+            get {
+                return ResourceManager.GetString("TbSettingsFragmentFallbackDelayTip", resourceCulture);
             }
         }
         
