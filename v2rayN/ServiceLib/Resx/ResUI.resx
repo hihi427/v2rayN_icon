@@ -1750,7 +1750,7 @@ The "Get Certificate" action may fail if a self-signed certificate is used or if
     <value>Bind Interface</value>
   </data>
   <data name="TbSettingsBindInterfaceTip" xml:space="preserve">
-    <value>For multi-interface environments, enter the name of the interface to bind. Only effective on Windows systems or TUN mode</value>
+    <value>For multi-interface environments, enter the interface name for outbound connections. On Linux/macOS, it only works when TUN mode is enabled.</value>
   </data>
   <data name="TbPreSharedKey" xml:space="preserve">
     <value>PreSharedKey</value>
@@ -1811,5 +1811,8 @@ The "Get Certificate" action may fail if a self-signed certificate is used or if
   </data>
   <data name="TbGeckoPacketSize" xml:space="preserve">
     <value>Gecko Packet Size (min/max)</value>
+  </data>
+  <data name="TbLegacyProtectTip" xml:space="preserve">
+    <value>If enabled, use sing-box TUN; otherwise, use xray TUN.</value>
   </data>
 </root>
