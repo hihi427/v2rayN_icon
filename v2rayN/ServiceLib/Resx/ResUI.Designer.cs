@@ -3106,7 +3106,7 @@ namespace ServiceLib.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Applies globally by default, with built-in FakeIP filtering (sing-box only). 的本地化字符串。
+        ///   查找类似 Applies globally by default, and built-in FakeIP filtering is only built into sing-box. 的本地化字符串。
         /// </summary>
         public static string TbFakeIPTips {
             get {
@@ -3345,6 +3345,24 @@ namespace ServiceLib.Resx {
         public static string TbInsecureConcurrency {
             get {
                 return ResourceManager.GetString("TbInsecureConcurrency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Ipv4 Address 的本地化字符串。
+        /// </summary>
+        public static string TbIpv4Address {
+            get {
+                return ResourceManager.GetString("TbIpv4Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Ipv6 Address 的本地化字符串。
+        /// </summary>
+        public static string TbIpv6Address {
+            get {
+                return ResourceManager.GetString("TbIpv6Address", resourceCulture);
             }
         }
         
