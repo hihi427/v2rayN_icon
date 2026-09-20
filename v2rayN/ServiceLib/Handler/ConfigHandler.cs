@@ -136,10 +136,7 @@ public static class ConfigHandler
         {
             config.SpeedTestItem.SpeedPingTestUrl = Global.SpeedPingTestUrls.First();
         }
-        if (config.SpeedTestItem.MixedConcurrencyCount < 1)
-        {
-            config.SpeedTestItem.MixedConcurrencyCount = 5;
-        }
+        config.SpeedTestItem.MixedConcurrencyCount = Math.Max(config.SpeedTestItem.MixedConcurrencyCount, Global.SpeedTestConcurrencyCountMin);
         if (config.SpeedTestItem.UdpTestTarget.IsNullOrEmpty())
         {
             config.SpeedTestItem.UdpTestTarget = Global.UdpTestTargets.First();
@@ -1528,7 +1525,7 @@ public static class ConfigHandler
                     p != null &&
                     p.IsValid() &&
                     (!p.ConfigType.IsComplexType() || p.ConfigType == EConfigType.Outbound) &&
-                    (extraItem.Filter.IsNullOrEmpty() || Regex.IsMatch(p.Remarks, extraItem.Filter))
+                    Utils.IsRegexMatch(p.Remarks, extraItem.Filter)
                 )
                 .ToList() ?? [];
             if (matchedChildProfiles.Count == 0)
@@ -1667,7 +1664,7 @@ public static class ConfigHandler
             //exist sub items //filter
             if (isSub && subid.IsNotEmpty() && subFilter.IsNotEmpty())
             {
-                if (!Regex.IsMatch(profileItem.Remarks, subFilter))
+                if (!Utils.IsRegexMatch(profileItem.Remarks, subFilter))
                 {
                     continue;
                 }
